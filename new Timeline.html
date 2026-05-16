@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Clairefontaine – Double Timeline</title>
+
+  <!-- SIMILE Timeline API -->
+  <script src="https://api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true"
+          type="text/javascript"></script>
+
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #timeline { height: 400px; border: 1px solid #aaa; }
+  </style>
+</head>
+
+<body onload="onLoad();" onresize="onResize();">
+
+<h2>Clairefontaine – European & Abbey Timeline</h2>
+<p>Click an event to see details and images.</p>
+
+<div id="timeline"></div>
+
+<script>
+  var tl;
+  var europeSource = new Timeline.DefaultEventSource();
+  var abbeySource  = new Timeline.DefaultEventSource();
+
+  var europeTheme = Timeline.ClassicTheme.create();
+  europeTheme.event.instant.color  = "#1E90FF";
+  europeTheme.event.duration.color = "#1E90FF";
+
+  var abbeyTheme = Timeline.ClassicTheme.create();
+  abbeyTheme.event.instant.color  = "#B22222";
+  abbeyTheme.event.duration.color = "#B22222";
+
+  function onLoad() {
+    var europeBand = Timeline.createBandInfo({
+      width: "60%",
+      intervalUnit: Timeline.DateTime.CENTURY,
+      intervalPixels: 200,
+      eventSource: europeSource,
+      date: "1200-01-01",
+      theme: europeTheme
+    });
+
+    var abbeyBand = Timeline.createBandInfo({
+      width: "40%",
+      intervalUnit: Timeline.DateTime.CENTURY,
+      intervalPixels: 200,
+      eventSource: abbeySource,
+      date: "1200-01-01",
+      theme: abbeyTheme
+    });
+
+    abbeyBand.syncWith  = 0;
+    abbeyBand.highlight = true;
+
+    tl = Timeline.create(document.getElementById("timeline"), [europeBand, abbeyBand]);
+
+    europeSource.loadJSON(europeEvents, ".");
+    abbeySource.loadJSON(abbeyEvents, ".");
+  }
+
+  var resizeTimerID = null;
+  function onResize() {
+    if (resizeTimerID == null) {
+      resizeTimerID = window.setTimeout(function() {
+        resizeTimerID = null;
+        tl.layout();
+      }, 500);
+    }
+  }
+
+  var europeEvents = {
+    "dateTimeFormat": "iso8601",
+    "events": [
+      {
+        "start": "1200-01-01",
+        "title": "Expansion cistercienne",
+        "description": "Croisades tardives, apogée féodale.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Cistercian_abbey.jpg"
+      },
+      {
+        "start": "1350-01-01",
+        "title": "Peste noire",
+        "description": "Crise démographique majeure.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Black_Death.jpg"
+      },
+      {
+        "start": "1450-01-01",
+        "title": "Invention de l'imprimerie",
+        "description": "Diffusion massive du savoir.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Gutenberg_press.jpg"
+      },
+      {
+        "start": "1517-01-01",
+        "title": "Réforme protestante",
+        "description": "Division religieuse de l'Europe.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Martin_Luther.jpg"
+      },
+      {
+        "start": "1700-01-01",
+        "title": "Domination Habsbourg",
+        "description": "Apogée baroque.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Albert_and_Isabella.jpg"
+      },
+      {
+        "start": "1789-07-14",
+        "title": "Révolution française",
+        "description": "Suppression des ordres religieux.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Storming_of_the_Bastille.jpg"
+      },
+      {
+        "start": "1900-01-01",
+        "title": "Industrialisation",
+        "description": "Naissance du patrimoine moderne.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/7/7e/WWI_soldiers.jpg"
+      }
+    ]
+  };
+
+  var abbeyEvents = {
+    "dateTimeFormat": "iso8601",
+    "events": [
+      {
+        "start": "1147-01-01",
+        "title": "Bénédiction de la source",
+        "description": "Origine spirituelle du site.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Clairefontaine_source.jpg"
+      },
+      {
+        "start": "1251-01-01",
+        "title": "Fondation de l'abbaye",
+        "description": "Henri V fonde l'abbaye cistercienne.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Ermesinde_portrait.jpg"
+      },
+      {
+        "start": "1350-01-01",
+        "title": "Reconstruction",
+        "description": "Clairefontaine II.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Archaeological_site.jpg"
+      },
+      {
+        "start": "1450-01-01",
+        "title": "Déplacement à Differdange",
+        "description": "Les moniales quittent Clairefontaine.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Differdange_castle.jpg"
+      },
+      {
+        "start": "1600-01-01",
+        "title": "Clairefontaine III",
+        "description": "Renaissance et légendes d'Ermesinde.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Ermesinde_portrait.jpg"
+      },
+      {
+        "start": "1796-01-01",
+        "title": "Destruction",
+        "description": "Pillage, incendie, démolition.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Building_fire.jpg"
+      },
+      {
+        "start": "1874-01-01",
+        "title": "Redécouverte",
+        "description": "Rachat par les Jésuites, fouilles.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Clairefontaine_chapel.jpg"
+      }
+    ]
+  };
+</script>
+
+</body>
+</html>
