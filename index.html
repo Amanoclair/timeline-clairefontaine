@@ -2,182 +2,20 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Clairefontaine – Double Timeline</title>
-
-  <!-- SIMILE Timeline complet -->
-  <script src="https://www.simile-widgets.org/timeline/api/timeline-api.js?bundle=true"></script>
-
-  <!-- Thème CSS SIMILE (obligatoire pour les couleurs et styles) -->
-  <link rel="stylesheet"
-        href="https://www.simile-widgets.org/timeline/api/styles/timeline.css"
-        type="text/css">
-
+  <title>Clairefontaine – Frise chronologique</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #timeline { height: 450px; border: 1px solid #aaa; }
+    body { margin: 0; font-family: Arial, sans-serif; }
+    #timeline-embed { width: 100%; height: 100vh; }
   </style>
 </head>
+<body>
 
-<body onload="onLoad();" onresize="onResize();">
-
-<h2>Clairefontaine – European & Abbey Timeline</h2>
-<p>Click an event to see details and images.</p>
-
-<div id="timeline"></div>
-
-<script>
-  var tl;
-  var europeSource = new Timeline.DefaultEventSource();
-  var abbeySource  = new Timeline.DefaultEventSource();
-
-  var europeTheme = Timeline.ClassicTheme.create();
-  europeTheme.event.instant.color  = "#1E90FF";
-  europeTheme.event.duration.color = "#1E90FF";
-  europeTheme.event.track.height = 20;
-  europeTheme.event.track.gap    = 4;
-
-  var abbeyTheme = Timeline.ClassicTheme.create();
-  abbeyTheme.event.instant.color  = "#B22222";
-  abbeyTheme.event.duration.color = "#B22222";
-  abbeyTheme.event.track.height = 20;
-  abbeyTheme.event.track.gap    = 4;
-
-  function onLoad() {
-    var europeBand = Timeline.createBandInfo({
-      width: "60%",
-      intervalUnit: Timeline.DateTime.CENTURY,
-      intervalPixels: 200,
-      eventSource: europeSource,
-      date: "1200-01-01",
-      theme: europeTheme
-    });
-
-    var abbeyBand = Timeline.createBandInfo({
-      width: "40%",
-      intervalUnit: Timeline.DateTime.CENTURY,
-      intervalPixels: 200,
-      eventSource: abbeySource,
-      date: "1200-01-01",
-      theme: abbeyTheme
-    });
-
-    abbeyBand.syncWith  = 0;
-    abbeyBand.highlight = true;
-
-    tl = Timeline.create(document.getElementById("timeline"), [europeBand, abbeyBand]);
-
-    europeSource.loadJSON(europeEvents, ".");
-    abbeySource.loadJSON(abbeyEvents, ".");
-  }
-
-  var resizeTimerID = null;
-  function onResize() {
-    if (resizeTimerID == null) {
-      resizeTimerID = window.setTimeout(function() {
-        resizeTimerID = null;
-        tl.layout();
-      }, 500);
-    }
-  }
-
-  /* --- Événements Europe --- */
-  var europeEvents = {
-    "dateTimeFormat": "iso8601",
-    "events": [
-      {
-        "start": "1200-01-01",
-        "title": "Expansion cistercienne",
-        "description": "Croisades tardives, apogée féodale.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Cistercian_abbey.jpg/800px-Cistercian_abbey.jpg"
-      },
-      {
-        "start": "1350-01-01",
-        "title": "Peste noire",
-        "description": "Crise démographique majeure.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Black_Death.jpg/800px-Black_Death.jpg"
-      },
-      {
-        "start": "1450-01-01",
-        "title": "Invention de l'imprimerie",
-        "description": "Diffusion massive du savoir.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Gutenberg_press.jpg/800px-Gutenberg_press.jpg"
-      },
-      {
-        "start": "1517-01-01",
-        "title": "Réforme protestante",
-        "description": "Division religieuse de l'Europe.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Martin_Luther.jpg/800px-Martin_Luther.jpg"
-      },
-      {
-        "start": "1700-01-01",
-        "title": "Domination Habsbourg",
-        "description": "Apogée baroque.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Albert_and_Isabella.jpg/800px-Albert_and_Isabella.jpg"
-      },
-      {
-        "start": "1789-07-14",
-        "title": "Révolution française",
-        "description": "Suppression des ordres religieux.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Storming_of_the_Bastille.jpg/800px-Storming_of_the_Bastille.jpg"
-      },
-      {
-        "start": "1900-01-01",
-        "title": "Industrialisation",
-        "description": "Naissance du patrimoine moderne.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/WWI_soldiers.jpg/800px-WWI_soldiers.jpg"
-      }
-    ]
-  };
-
-  /* --- Événements Abbaye --- */
-  var abbeyEvents = {
-    "dateTimeFormat": "iso8601",
-    "events": [
-      {
-        "start": "1147-01-01",
-        "title": "Bénédiction de la source",
-        "description": "Origine spirituelle du site.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Clairefontaine_source.jpg/800px-Clairefontaine_source.jpg"
-      },
-      {
-        "start": "1251-01-01",
-        "title": "Fondation de l'abbaye",
-        "description": "Henri V fonde l'abbaye cistercienne.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ermesinde_portrait.jpg/800px-Ermesinde_portrait.jpg"
-      },
-      {
-        "start": "1350-01-01",
-        "title": "Reconstruction",
-        "description": "Clairefontaine II.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Archaeological_site.jpg/800px-Archaeological_site.jpg"
-      },
-      {
-        "start": "1450-01-01",
-        "title": "Déplacement à Differdange",
-        "description": "Les moniales quittent Clairefontaine.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Differdange_castle.jpg/800px-Differdange_castle.jpg"
-      },
-      {
-        "start": "1600-01-01",
-        "title": "Clairefontaine III",
-        "description": "Renaissance et légendes d'Ermesinde.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ermesinde_portrait.jpg/800px-Ermesinde_portrait.jpg"
-      },
-      {
-        "start": "1796-01-01",
-        "title": "Destruction",
-        "description": "Pillage, incendie, démolition.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Building_fire.jpg/800px-Building_fire.jpg"
-      },
-      {
-        "start": "1874-01-01",
-        "title": "Redécouverte",
-        "description": "Rachat par les Jésuites, fouilles.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Clairefontaine_chapel.jpg/800px-Clairefontaine_chapel.jpg"
-      }
-    ]
-  };
-</script>
+<div id="timeline-embed">
+  <iframe 
+    src="https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=2PACX-1vSd85ZqtB65T1oGeh1yIuLn85Gnzq-Pt0N4FzgEx6zX-nKmYS8Kk_NWMGS6FTXNkxuAM3epDAygIEW_&font=Default&lang=fr&initial_zoom=2&height=650"
+    width="100%" height="100%" frameborder="0">
+  </iframe>
+</div>
 
 </body>
 </html>
