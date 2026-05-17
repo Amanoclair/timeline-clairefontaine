@@ -33,10 +33,14 @@
   var europeTheme = Timeline.ClassicTheme.create();
   europeTheme.event.instant.color  = "#1E90FF";
   europeTheme.event.duration.color = "#1E90FF";
+  europeTheme.event.track.height = 20;
+  europeTheme.event.track.gap    = 4;
 
   var abbeyTheme = Timeline.ClassicTheme.create();
   abbeyTheme.event.instant.color  = "#B22222";
   abbeyTheme.event.duration.color = "#B22222";
+  abbeyTheme.event.track.height = 20;
+  abbeyTheme.event.track.gap    = 4;
 
   function onLoad() {
     var europeBand = Timeline.createBandInfo({
